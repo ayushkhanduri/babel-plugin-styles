@@ -11,7 +11,7 @@ function babelPluginStyles({ types: t }) {
           if (state.hasStyles) {
             const importDeclaration = t.importDeclaration(
               [t.importDefaultSpecifier(state.stylesIdentifier)],
-              t.stringLiteral(state.opts.packageName || 'styles')
+              t.stringLiteral(state.opts.packageName || 'react-dom-styles')
             )
 
             path.node.body.unshift(importDeclaration)

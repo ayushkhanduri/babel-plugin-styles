@@ -13,7 +13,7 @@ transform(
     assert.equal(
       result.code.trim(),
       `
-import _style from "styles";
+import _style from "react-dom-styles";
 <span style={_style({
   color: 'white'
 }, {
@@ -38,7 +38,7 @@ transform(
       `
 "use strict";
 
-var _styles = _interopRequireDefault(require("styles"));
+var _styles = _interopRequireDefault(require("react-dom-styles"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

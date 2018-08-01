@@ -11,7 +11,7 @@ Support react-native styles array writting in react-dom
 💫
 
 ```js
-import _style from "styles";
+import _style from "react-dom-styles";
 <span style={_style({
   color: 'white'
 }, {
@@ -21,9 +21,9 @@ import _style from "styles";
 })} />;
 ```
 
-By default imports from `styles`. However the package name is configurable.
+By default imports from `react-dom-styles`. However the package name is configurable.
 
-## styles package code
+## react-dom-styles package code
 
 ```js
 function styles() {
