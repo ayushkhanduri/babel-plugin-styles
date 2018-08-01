@@ -10,6 +10,7 @@ transform(
     if (err) {
       return console.log(err);
     }
+
     assert.equal(
       result.code.trim(),
       `
@@ -33,16 +34,17 @@ transform(
     if (err) {
       return console.log(err);
     }
+
     assert.equal(
       result.code.trim(),
       `
 "use strict";
 
-var _styles = _interopRequireDefault(require("react-dom-styles"));
+var _reactDomStyles = _interopRequireDefault(require("react-dom-styles"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<span style={(0, _styles.default)({
+<span style={(0, _reactDomStyles.default)({
   color: 'white'
 }, {
   padding: 10
