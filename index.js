@@ -1,17 +1,17 @@
-function babelPluginClassNames({ types: t }) {
+function babelPluginStyles({ types: t }) {
   const cloneNode = t.cloneNode || t.cloneDeep
   return {
-    name: "babel-plugin-classnames",
+    name: "babel-plugin-styles",
     visitor: {
       Program: {
         enter(path, state) {
-          state.classNamesIdentifier = path.scope.generateUidIdentifier('classNames')
+          state.stylesIdentifier = path.scope.generateUidIdentifier('style')
         },
         exit(path, state) {
-          if (state.hasClassNames) {
+          if (state.hasStyles) {
             const importDeclaration = t.importDeclaration(
-              [t.importDefaultSpecifier(state.classNamesIdentifier)],
-              t.stringLiteral(state.opts.packageName || 'classnames')
+              [t.importDefaultSpecifier(state.stylesIdentifier)],
+              t.stringLiteral(state.opts.packageName || 'styles')
             )
 
             path.node.body.unshift(importDeclaration)
@@ -19,7 +19,7 @@ function babelPluginClassNames({ types: t }) {
         }
       },
       JSXAttribute(path, state) {
-        if (path.node.name.name !== 'className') {
+        if (path.node.name.name !== 'style') {
           return
         }
 
@@ -35,19 +35,19 @@ function babelPluginClassNames({ types: t }) {
 
         expression.replaceWith(
           t.callExpression(
-            cloneNode(state.classNamesIdentifier),
+            cloneNode(state.stylesIdentifier),
             expression.get('elements').map(e => cloneNode(e.node)),
           )
         )
 
-        state.hasClassNames = true
+        state.hasStyles = true
       }
     }
   }
 }
 
-exports = module.exports = babelPluginClassNames
-exports.default = babelPluginClassNames
+exports = module.exports = babelPluginStyles
+exports.default = babelPluginStyles
 Object.defineProperty(exports, "__esModule", {
   value: true
 })

@@ -1,47 +1,55 @@
-const assert = require('assert')
-const transform = require("@babel/core").transform
-const plugin = require('./')
+const assert = require("assert");
+const transform = require("@babel/core").transform;
+const plugin = require("./");
+const fs = require('fs');
 
-transform(`
-<div className={[a,b && fo]} />;
-classNames(a, b && foo);
-<div className="hhi" />;
-<div className={hhi} />;
-<div className={[a,b && fo].join('')} />;
-`.trim(), { plugins: ["@babel/plugin-syntax-jsx", plugin] }, (err, result) => {
-  if (err) {
-    throw err
+transform(
+  `<span style={[{color: 'white'}, {padding: 10}, false && {fontSize: 10}]} />;`.trim(),
+  { plugins: ["@babel/plugin-syntax-jsx", plugin] },
+  (err, result) => {
+    if (err) {
+      return console.log(err);
+    }
+    assert.equal(
+      result.code.trim(),
+      `
+import _style from "styles";
+<span style={_style({
+  color: 'white'
+}, {
+  padding: 10
+}, false && {
+  fontSize: 10
+})} />;
+      `.trim()
+    );
   }
-  assert.equal(
-    result.code,
-    `
-import _classNames from "classnames";
-<div className={_classNames(a, b && fo)} />;
-classNames(a, b && foo);
-<div className="hhi" />;
-<div className={hhi} />;
-<div className={[a, b && fo].join('')} />;
-    `.trim()
-  )
-})
+);
 
-transform(`
-<div className={[a,b && fo]}><div className={[styles.foo]} /></div>;
-`.trim(), { presets: ["@babel/env"],  plugins: ["@babel/plugin-syntax-jsx", plugin] }, (err, result) => {
-  if (err) {
-    throw err
-  }
-
-  assert.equal(
-    result.code,
-    `
+transform(
+  `<span style={[{color: 'white'}, {padding: 10}, false && {fontSize: 10}]} />;`.trim(),
+  { presets: ["@babel/env"], plugins: ["@babel/plugin-syntax-jsx", plugin] },
+  (err, result) => {
+    if (err) {
+      return console.log(err);
+    }
+    assert.equal(
+      result.code.trim(),
+      `
 "use strict";
 
-var _classnames = _interopRequireDefault(require("classnames"));
+var _styles = _interopRequireDefault(require("styles"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<div className={(0, _classnames.default)(a, b && fo)}><div className={(0, _classnames.default)(styles.foo)} /></div>;
-`.trim()
-  )
-})
+<span style={(0, _styles.default)({
+  color: 'white'
+}, {
+  padding: 10
+}, false && {
+  fontSize: 10
+})} />;
+      `.trim()
+    );
+  }
+);

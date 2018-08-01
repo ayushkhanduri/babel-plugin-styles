@@ -1,7 +1,7 @@
 {
-  "name": "babel-plugin-classnames",
+  "name": "babel-plugin-styles",
   "version": "0.1.0",
-  "description": "Never import classnames again! Converts arrays of classnames to a call of a function of your choice.",
+  "description": "Support react-native style array writting",
   "main": "index.js",
   "files": [
     "index.js",
@@ -12,7 +12,7 @@
     "test": "node test.js"
   },
   "keywords": [],
-  "author": "Giuseppe Gurgone",
+  "author": "Jeremy",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "7.0.0-beta.53",
