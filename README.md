@@ -27,7 +27,7 @@ By default imports from `react-dom-styles`. However the package name is configur
 
 ```js
 function styles() {
-  const obj = Object.create(null);
+  const obj = {};
   [].slice.call(arguments).forEach(item => {
     item && Object.keys(item).forEach(k => {
       obj[k] = item[k]
